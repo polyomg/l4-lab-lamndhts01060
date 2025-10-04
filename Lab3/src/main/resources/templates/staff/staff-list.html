@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff List</title>
+</head>
+<body>
+<h2>Danh sách nhân viên</h2>
+
+<div th:each="st, stat : ${list}">
+    <!-- Ảnh staff -->
+    <img th:src="@{'/photos/' + ${st.photo}}" style="height:40px"/>
+    
+    <!-- Số thứ tự + Họ tên -->
+    <b th:text="${stat.count + '. ' + #strings.capitalizeWords(st.fullname)}"></b>
+
+    <!-- Lương format 2 số lẻ, phân cách dấu phẩy -->
+    <span th:text="${#numbers.formatDecimal(st.salary, 0, 'COMMA', 2, 'POINT')}"></span>
+
+    <!-- Chỉ hiện gạch chân nếu chưa phải phần tử cuối -->
+    <th:block th:if="${!stat.last}">
+        <hr/>
+    </th:block>
+</div>
+
+</body>
+</html>
