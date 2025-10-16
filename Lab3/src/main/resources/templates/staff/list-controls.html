@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List Controls</title>
+</head>
+<body>
+    <h3>Fill to SelectBox</h3>
+    <select id="cbo" name="cbo">
+        <th:block th:each="st : ${list}">
+            <option th:value="${st.id}" th:text="${st.fullname}"></option>
+        </th:block>
+    </select>
+
+    <h3>Create Radio Button Group</h3>
+    <th:block th:each="st : ${list}">
+        <label>
+            <input type="radio" name="rdo" th:value="${st.id}">
+            <span th:text="${st.fullname}"></span>
+        </label>
+        <br/>
+    </th:block>
+
+    <script>
+        const cbo = document.getElementById("cbo");
+        const radios = document.querySelectorAll("input[name='rdo']");
+
+        // Khi chọn radio → đổi selectbox
+        radios.forEach(radio => {
+            radio.addEventListener("change", () => {
+                cbo.value = radio.value;
+            });
+        });
+
+        // Khi chọn selectbox → đổi radio
+        cbo.addEventListener("change", () => {
+            radios.forEach(radio => {
+                radio.checked = (radio.value === cbo.value);
+            });
+        });
+    </script>
+</body>
+</html>
